@@ -82,8 +82,6 @@ char *caesar_encrypt(char *message_to_encrypt, void *shift){
         if (is_letter(message_to_encrypt[i])){
         string[i]=shift_character(message_to_encrypt[i],*((int*)shift));
         }
-        else if (message_to_encrypt[i]==32){
-        string[i]=32;}
         else{string[i]=message_to_encrypt[i];}
         i++;
         }
@@ -104,8 +102,6 @@ char* polyalphabetic_encrypt(char* message_to_encrypt, void* key_string){
         string= realloc(string,(str_size++)*sizeof(char));
         if (is_letter(message_to_encrypt[i])){
             string[i]=shift_character(message_to_encrypt[i],letter_to_shift(((char*)key_string)[index++]));}
-        else if (message_to_encrypt[i]==32){
-            string[i]=32;}
         else {string[i]=message_to_encrypt[i];}
         i++;
         }
