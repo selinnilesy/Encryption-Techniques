@@ -2,7 +2,8 @@
 #include <stdlib.h>
 #include <math.h>
 
-/*HELPER FUNCTIONS HERE*/
+/* IT HAS BEEN GIVEN THAT STATIC ARRAYS ARE FORBIDDEN AND POINTERS MUST BE USED FOR THIS EXAM.*/
+
 int get_string_length(char *string) {
     int i = 0;
     if (string != NULL) {
@@ -10,7 +11,6 @@ int get_string_length(char *string) {
     }
     return i;
 }
-
 int get_longest_string_length(char **s, int n_string) {
     int maxLength = 0, tempLength = 0;
     int i;
@@ -55,22 +55,21 @@ int letter_to_shift(char c) {
 
 char shift_character(char c, int shift){
     c=(int)c;
-    if (c>=97 && c<=122){
+    if (c>96 && c<123){
         if ((c+shift)>122){
-            return (c+shift-26);}
-        else if ((c+shift)<97){return (c+shift+26);}
+            return c+(shift%26);}
+        else if ((c+shift)<97){return 123+(shift%26);}
         else {return c+shift;}
     }
-    else if (c>=65 && c<=90){
-        if ((c+shift)>90)
-            return (c+shift-26);
-        else if ((c+shift)<65){return (c+shift+26);}
+    else if (c>64 && c<91){
+        if ((c+shift)>90){
+            return c+(shift%26);}
+        else if ((c+shift)<65){return 91+(shift%26);}
         else {return c+shift;}
     }
     else {return c;}
 }
 
-/*FIRST METHOD*/
 char *caesar_encrypt(char *message_to_encrypt, void *shift){
     char *string;
     int i,str_size=2;
@@ -91,7 +90,6 @@ char *caesar_encrypt(char *message_to_encrypt, void *shift){
     return string; }
     else {return NULL;}
 }
-/*SECOND METHOD*/
 char* polyalphabetic_encrypt(char* message_to_encrypt, void* key_string){
     char *string;
     int key_length,index=0,i=0,str_size=2;
@@ -113,11 +111,10 @@ char* polyalphabetic_encrypt(char* message_to_encrypt, void* key_string){
     return string; }
     else {return NULL;}
 }
-/*THIRD METHOD*/
 char **combine_strings(char **messages, int n_messages, int grouping, char *salt){
     int salt_length,max_length,str_length;
     int j,a,salt_index=0,temp_index=0,s=1,i=0;
-    char *temp;
+    char *temp,*index;
     char** result = (char**) malloc(n_messages*sizeof(char*));
     char** temp_msg = (char**) malloc(n_messages*sizeof(char*));
     for(i=0; i<n_messages; i++){
@@ -130,9 +127,10 @@ char **combine_strings(char **messages, int n_messages, int grouping, char *salt
 
     for(i=0; i<n_messages; i++){
         temp = (char*) malloc((str_length+1)*sizeof(char));
-        while(*(messages[i])){
-            temp[temp_index++] = *(messages[i]);        /*filling*/
-            messages[i]++;
+        index = messages[i];
+        while(*index){
+            temp[temp_index++] = *(index);                /*filling*/
+            index++;                                      /*bcs it is forbidden to change the strings and initial points of pointers in the exam */
         }
         temp[str_length] = '\0';
 
@@ -156,9 +154,10 @@ char **combine_strings(char **messages, int n_messages, int grouping, char *salt
         result[j] = temp;
         temp = NULL;
     }
+
+    free(temp_msg);
     return result;
 }
-/*TO CALL ARBITRARY METHOD*/
 char **mycipher_encrypt(char **messages, int n_messages, int grouping, char *salt,char *(*cipher_method)(char *, void *),  void* shift){
     char **result=combine_strings(messages,n_messages,grouping,salt);
 
@@ -173,7 +172,6 @@ char **mycipher_encrypt(char **messages, int n_messages, int grouping, char *sal
     return result;
 }
 
-/*TO TEST*/
 int main() {
     int cipher_method,shift_number,*shift,i=3;
     shift=i;
@@ -190,6 +188,6 @@ int main() {
     cipher_method= caesar_encrypt;
     shift_number= 3;
     combine = combine_strings(messages, 3,4, salt);
-    print_combined_strings(combine,3);
+    printf("%c", shift_character('A',5));
     return 0 ;
 }
