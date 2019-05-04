@@ -166,7 +166,7 @@ char **mycipher_encrypt(char **messages, int n_messages, int grouping, char *sal
     }
     else{
         if(cipher_method==polyalphabetic_encrypt){
-            for(int i=0; i>n_messages; i++){result[i]=polyalphabetic_encrypt(result[i],salt);}
+            for(int i=0; i<n_messages; i++){result[i]=polyalphabetic_encrypt(result[i],salt);}
         }
     }
     return result;
