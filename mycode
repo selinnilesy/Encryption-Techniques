@@ -53,6 +53,7 @@ int letter_to_shift(char c) {
     return -1;
 }
 
+/*FUNCTION TO SHIFT LETTERS*/
 char shift_character(char c, int shift){
     c=(int)c;
     if (c>96 && c<123){
@@ -69,7 +70,7 @@ char shift_character(char c, int shift){
     }
     else {return c;}
 }
-
+/* FIRST METHOD*/
 char *caesar_encrypt(char *message_to_encrypt, void *shift){
     char *string;
     int i,str_size=2;
@@ -90,6 +91,7 @@ char *caesar_encrypt(char *message_to_encrypt, void *shift){
     return string; }
     else {return NULL;}
 }
+/* SECOND METHOD*/
 char* polyalphabetic_encrypt(char* message_to_encrypt, void* key_string){
     char *string;
     int key_length,index=0,i=0,str_size=2;
@@ -111,6 +113,7 @@ char* polyalphabetic_encrypt(char* message_to_encrypt, void* key_string){
     return string; }
     else {return NULL;}
 }
+/* THIRD METHOD*/
 char **combine_strings(char **messages, int n_messages, int grouping, char *salt){
     int salt_length,max_length,str_length;
     int j,a,salt_index=0,temp_index=0,s=1,i=0;
@@ -158,6 +161,7 @@ char **combine_strings(char **messages, int n_messages, int grouping, char *salt
     free(temp_msg);
     return result;
 }
+/* TO CALL ARBITRARY METHOD, CAESAR OR POLYALPHABETIC*/
 char **mycipher_encrypt(char **messages, int n_messages, int grouping, char *salt,char *(*cipher_method)(char *, void *),  void* shift){
     char **result=combine_strings(messages,n_messages,grouping,salt);
 
@@ -172,6 +176,7 @@ char **mycipher_encrypt(char **messages, int n_messages, int grouping, char *sal
     return result;
 }
 
+/* TO TEST MY CODE*/
 int main() {
     int cipher_method,shift_number,*shift,i=3;
     shift=i;
