@@ -159,8 +159,7 @@ char **combine_strings(char **messages, int n_messages, int grouping, char *salt
 }
 /* TO CALL ARBITRARY METHOD, CAESAR OR POLYALPHABETIC*/
 char **mycipher_encrypt(char **messages, int n_messages, int grouping, char *salt,char *(*cipher_method)(char *, void *),  void* shift){
-    char **result=combine_strings(messages,n_messages,grouping,salt);
-
+    char **result=(char**) malloc(n_messages*sizeof(char*));
     if (cipher_method==caesar_encrypt){
         for (int i=0; i<n_messages; i++){ result[i]=caesar_encrypt(result[i],((int*)shift));}
     }
